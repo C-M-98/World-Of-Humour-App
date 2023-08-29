@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{%block title %}
+HOME18+
+{% endblock %}
+{% block main %}
+<main class="container-fluid text-center" id="layout">
+    <div id="content-main" class="fade-in">
+        <div id="the-card1" class="the-card1">
+            <div id="the-card" class="the-card">
+                <div id="card-front">
+                    <img src="data:image/jpeg;base64,{{ encoded_image_data}}" id="small-profile-input2">
+                    <div id="details">
+                        <p id="name-index">{{ name }}</p>
+                        <p id="age-index">Age: {{ age }}</p>
+                        <p id="gender-index">{{ gender }}</p>
+                    </div>
+                </div>
+                <div id="card-back">
+                    <div id="button1">
+                        <a href="/upload"><button type="submit" class="btn btn-light" id="profile2" action="/upload">Edit
+                                Profile</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div id="body1">
+                <form id="getjoke" class="getjoke" action="/getJoke" method="post">
+                    <h4>Choose categories of jokes you would like to recieve</h4>
+                    <input type="checkbox" name="category" id="programming" value="programming" class="styled-checkbox">
+                    <label for="programming" class="checkbox-label">Programming</label>
+
+                    <input type="checkbox" name="category" id="Spooky" value="Spooky" class="styled-checkbox">
+                    <label for="Spooky" class="checkbox-label">Spooky</label>
+                    <br />
+                    <input type="checkbox" name="category" id="dark" value="dark" class="styled-checkbox">
+                    <label for="dark" class="checkbox-label">Dark</label>
+
+                    <input type="checkbox" name="category" id="pun" value="pun" class="styled-checkbox">
+                    <label for="pun" class="checkbox-label">Pun</label>
+
+        </div>
+        <div id="body2">
+            <h4>Choose restriction on topics that should be avoided</h4>
+            <input type="checkbox" name="blacklist" id="nsfw" value="nsfw" class="styled-checkbox">
+            <label for="nsfw" class="checkbox-label">NSFW</label>
+
+            <input type="checkbox" name="blacklist" id="religious" value="religious" class="styled-checkbox">
+            <label for="religious" class="checkbox-label">Religious</label>
+            <input type="checkbox" name="blacklst" id="political" value="political" class="styled-checkbox">
+            <label for="political" class="checkbox-label">Political</label>
+            <br />
+            <br />
+            <input type="checkbox" name="blacklist" id="racist" value="racist" class="styled-checkbox">
+            <label for="racist" class="checkbox-label">Racist</label>
+
+            <input type="checkbox" name="blacklist" id="sexistt" value="sexist" class="styled-checkbox">
+            <label for="sexist" class="checkbox-label">Sexist</label>
+            <br />
+        </div>
+
+        <div id="body32">
+            <h4>Choose a type!</h4>
+            <input type="radio" name="jokeType" id="twoPart" value="twopart" class="styled-checkbox">
+            <label for="twoPart" class="checkbox-label">Two Part</label>
+
+            <input type="radio" name="jokeType" id="single" value="single" class="styled-checkbox">
+            <label for="single" class="checkbox-label">Single</label>
+            <br />
+            <button type="submit" class="btn btn-light" id="getJoke">Get Joke</button>
+            <br /><br />
+            </form>
+        </div>
+
+    </div>
+    </div>
+    </div>
+    <script defer preload>
+        document.addEventListener("DOMContentLoaded", function() {
+            var indexbox = document.getElementById("content-main");
+            indexbox.classList.add("fade-in-active");
+        });
+
+    </script>
+
+    {% endblock %}

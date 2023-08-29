@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{%block title %}
+REGISTER
+{% endblock %}
+{% block main %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == "error" %}
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="background-color: transparent;color:white">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% block scripts %}
+<script defer>
+  $(document).ready(function() {
+    const messages = {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{{ messages | tojson }}{% endif %}{% endwith %};
+    let hasError = false; // Flag to track if there is an error message
+
+    if (messages && messages.length > 0) {
+      for (const [category, message] of messages) {
+        if (category === "error") {
+          hasError = true;
+          break; // If there is an error message, set the flag and stop iterating
+        }
+      }
+    }
+
+    if (hasError) {
+      // Show the modal when there is an error message
+      $('#staticBackdrop').modal('show');
+
+      $('#staticBackdrop button[data-bs-dismiss="modal"]').on('click', function() {
+        $('#staticBackdrop').modal('hide');
+      });
+    }
+
+    // This function will be called when the DOM content is fully loaded
+
+  });
+</script>
+{% endblock %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div id="form-register-container-main" class="form-register-container-main">
+<div id="message1" class="message1">We would love to have you!</div>
+
+<div id="fadingForm1" class="form-Container1">
+  <form action="/register" method="post" autocomplete="off" id="myForm1">
+    <div class="mb-3">
+      <label for="Name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <div class="mb-3">
+      <label for="confirm" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" id="confirm" name="confirm" required>
+    </div>
+    <div id="button-register-container1" class="button-register-container1">
+    <button type="submit" class="btn btn-light">Register</button>
+  </div>
+    <br />
+    <br />
+  </form>
+</div>
+</div>
+<script defer>
+   document.addEventListener("DOMContentLoaded", function() {
+      var message1 = document.getElementById("message1");
+      message1.classList.toggle("slide-in");
+   });
+   document.addEventListener("DOMContentLoaded", function() {
+      var formContainer1 = document.getElementById("fadingForm1");
+      formContainer1.classList.add("visible");
+    });
+
+    // Check if the DOM content is already loaded, if so, call the function immediately
+</script>
+{% endblock %}

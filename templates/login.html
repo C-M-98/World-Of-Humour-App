@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{%block title %}
+LOGIN
+{% endblock %}
+{% block main %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == "error" %}
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+    var hasError = false; // Flag to track if there is an error message
+    const messages = {% with messages = get_flashed_messages(with_categories = true) %}{% if messages %}{  {messages | tojson} } {% endif %} {% endwith %};
+    if (messages && messages.length > 0) {
+        for (const [category, message] of messages) {
+            if (category === "error") {
+                hasError = true;
+                break; // If there is an error message, set the flag and stop iterating
+            }
+        }
+    }
+
+    if (hasError) {
+        // Show the modal when there is an error message
+        $('#staticBackdrop').modal('show');
+
+        $('#staticBackdrop button[data-bs-dismiss="modal"]').on('click', function() {
+            $('#staticBackdrop').modal('hide');
+        });
+    }
+});
+
+  </script>
+{% endblock %}
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="background-color: transparent;color:white">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div id="form-login-container-main">
+  <div id="message-main" class="message-main">
+    <div id="message" class="message">Enjoy the world of humour!</div>
+  </div>
+  <div id="fading-form-container">
+    <div id="fadingForm">
+      <form action="/login" method="post" autocomplete="off" id="myForm">
+        <div class="mb-3">
+          <label for="Name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label" id="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div id="button-login-container" class="button-login-container">
+          <button type="submit" class="btn btn-light">Log In</button>
+        </div>
+      </form>
+      <br />
+      <div id="button-register-container" class="button-register-container">
+        <a href="/register"><button type="submit" class="btn btn-light">Register</button></a>
+      </div>
+    </div>
+    <br />
+  </div>
+</div>
+
+<script defer preload>
+  document.addEventListener("DOMContentLoaded", function() {
+    var message = document.getElementById("message");
+    message.classList.toggle("slide-in");
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    var formContainer = document.getElementById("fadingForm");
+    formContainer.classList.toggle("visible");
+  });
+
+
+</script>
+{% endblock %}

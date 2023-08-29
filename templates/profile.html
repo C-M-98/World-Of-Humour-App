@@ -1,0 +1,155 @@
+{% extends "layout.html" %}
+
+{%block title %}
+Profile
+{% endblock %}
+{% block main %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == "error" %}
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="background-color: transparent;color:white">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    const messages = {% with messages = get_flashed_messages(with_categories = true) %}{% if messages %}{ { messages | tojson } } {% endif %} {% endwith %};
+  let hasError = false; // Flag to track if there is an error message
+
+  if (messages && messages.length > 0) {
+    for (const [category, message] of messages) {
+      if (category === "error") {
+        hasError = true;
+        break; // If there is an error message, set the flag and stop iterating
+      }
+    }
+  }
+
+  if (hasError) {
+    // Show the modal when there is an error message
+    $('#staticBackdrop').modal('show');
+
+    $('#staticBackdrop button[data-bs-dismiss="modal"]').on('click', function() {
+      $('#staticBackdrop').modal('hide');
+    });
+  }
+
+    // This function will be called when the DOM content is fully loaded
+
+  });
+</script>
+{% endblock %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div id="upload-parent">
+  <div id="upload-container" class="fade-in">
+    <div id="form-container-profile">
+    <br />
+      <form id="profile-form" class="profile-form" action="/upload" method="post" enctype="multipart/form-data">
+        <div id="photo-upload">
+          <div id="preview">
+            <img src="data:image/jpeg;base64,{{ encoded_image_data }}" id="small-profile-input">
+          </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-light" id="create1"><label for="photoInput"
+            class="form-label1">Upload</label></button>
+        <br />
+        <input type="file" class="form-control3" id="photoInput" name="photoInput" accept="image/*">
+
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" value="{{ name }}" required>
+    <br />
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" name="email" value="{{ email}}" required>
+    <br />
+    <label for="age" class="form-label">Age</label>
+    <input type="number" class="form-control" id="age" name="age" value="{{ age }}" required>
+    <br />
+    <label for="number" class="form-label">Mobile</label>
+    <input type="number" class="form-control" id="number" name="number" value="{{ number }}" required>
+    <br />
+    <div id="gender">
+      <input type="radio" id="male" name="gender" value="Male" required class="styled-radio">
+      <label class="radio-label" for="male">Male</label>
+
+      <input type="radio" id="female" name="gender" value="Female" required class="styled-radio">
+      <label class="radio-label" for="female">Female</label>
+    </div>
+    <div id="buttonCreate">
+      <button type="submit" class="btn btn-light" id="create">Create</button>
+    </div>
+    </form>
+    </br>
+  </div>
+</div>
+</div>
+</div>
+<script defer>
+  document.addEventListener("DOMContentLoaded", function() {
+    var fadeBox = document.getElementById("upload-container");
+    fadeBox.classList.add("fade-in-active");
+  });
+
+  document.getElementById("photoInput").addEventListener("change", function(event) {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const img = new Image();
+        img.onload = function() {
+          const maxWidth = 350; // Set the maximum width you desire
+          const maxHeight = 600; // Set the maximum height you desire
+          var newWidth = maxWidth;
+          var newHeight = newWidth
+          const borderRadius = '50%'; // Adjust the border radius as needed
+          if (newHeight > maxHeight) {
+            newHeight = maxHeight;
+            newWidth = newHeight;
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, newWidth, newHeight);
+          const resizedDataURL = canvas.toDataURL();
+          const compressedDataURL = canvas.toDataURL('image/jpeg', 0.4);
+
+          const previewDiv = document.getElementById("preview");
+          const resizedImg = document.createElement("img");
+          resizedImg.src = resizedDataURL;
+          resizedImg.style.maxWidth = "140px";
+          resizedImg.style.maxHeight = "140px";
+          resizedImg.style.borderRadius = "45px";
+          previewDiv.innerHTML = '';
+          previewDiv.appendChild(resizedImg);
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{%block title %}
+INDEX
+{% endblock %}
+{% block main %}
+<main class="container-fluid text-center" id="layout">
+    <div id="content-main" class="fade-in">
+        <div id="the-card1" class="the-card1">
+            <div id="the-card" class="the-card">
+                <div id="card-front1">
+                    <div id="heading-data-index">
+                        <p id="welcome">WELLCOME!</p>
+                        <p id="name1">{{ name }}</p>
+                        <p id="edit">Click on the card to create a profile</p>
+                    </div>
+                </div>
+                <div id="card-back1">
+                    <div id="button1">
+                        <a href="/upload"><button type="submit" class="btn btn-light" id="profile">Create
+                                Profile</button></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="body4">
+            <p id="about"> We are thrilled to introduce you to a world of laughter and amusement,
+                where you can indulge in a never-ending stream of side-splitting jokes and enjoy a fantastic time
+                with friends and family.
+                Our platform is designed to spread joy, bring smiles to faces, and create unforgettable moments that
+                you'll cherish forever.
+                <br />
+                <br />
+                As you embark on this laughter-filled journey, be prepared to be tickled by a vast collection of
+                hilarious jokes,
+                carefully curated to cater to every sense of humor. Whether you prefer witty one-liners, clever
+                puns,
+                or hilarious anecdotes, we've got you covered! Our team of joke enthusiasts is dedicated to ensuring
+                that you have a laughter-filled experience each time you visit.
+                <br />
+                <br />
+                Creating a profile is a breeze, and once you join our community,
+                you can personalize your own profile to showcase your unique style of humor by choosing what joke is
+                displayed.
+                <br />
+                <br />
+                So, sit back, relax, and get ready to unwind, de-stress,
+                and have a fantastic time on our platform.
+            </p>
+        </div>
+    </div>
+    <script defer preload>
+        document.addEventListener("DOMContentLoaded", function() {
+            var indexbox = document.getElementById("content-main");
+            indexbox.classList.add("fade-in-active");
+        });
+    </script>
+
+    {% endblock %}
