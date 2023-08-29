@@ -2,7 +2,7 @@
 #### Video Demo:  https://youtu.be/0RYcQ4_ow24
 #### Description:A Personalized Web App returning jokes to the user
 
-My idea was to help a bit with the log hours in coding, instead of going to social media for a quick distraction, I wanted to build something that didn't distact you in a way that its difficult to get back into your code space.
+My idea was to help a bit with the long hours in coding, instead of going to social media for a quick distraction, I wanted to build something that didn't distact you in a way that its difficult to get back into your code space.
 
 So I developed WORLD OF HUMOUR.
 
